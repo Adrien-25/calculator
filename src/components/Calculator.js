@@ -1,28 +1,24 @@
 import React, { useState } from "react";
-// import "./Calculator.css";
 
 export default function Calculator() {
   const [display, setDisplay] = useState("0");
   const [expression, setExpression] = useState("");
 
-  // Handle number input
   const handleNumberClick = (num) => {
-    if (display === "0" && num === "0") return; // Prevent multiple leading zeros
+    if (display === "0" && num === "0") return;
     setDisplay((prev) => (prev === "0" ? num : prev + num));
     setExpression((prev) => prev + num);
   };
 
-  // Handle operator input
   const handleOperatorClick = (operator) => {
-    if (/[\+\-\*\/]$/.test(expression)) {
-      setExpression((prev) => prev.slice(0, -1) + operator); // Replace last operator
+    if (/[+\-*/]$/.test(expression)) {
+      setExpression((prev) => prev.slice(0, -1) + operator);
     } else {
       setExpression((prev) => prev + operator);
     }
     setDisplay(operator);
   };
 
-  // Handle decimal input
   const handleDecimalClick = () => {
     if (!display.includes(".")) {
       setDisplay((prev) => prev + ".");
@@ -30,16 +26,14 @@ export default function Calculator() {
     }
   };
 
-  // Handle clear
   const handleClear = () => {
     setDisplay("0");
     setExpression("");
   };
 
-  // Handle calculation
   const handleEquals = () => {
     try {
-      const result = eval(expression).toFixed(4); // Safe only with controlled input
+      const result = Function(`return ${expression}`)().toFixed(4);
       setDisplay(result);
       setExpression(result);
     } catch (error) {
