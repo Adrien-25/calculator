@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { evaluate } from "mathjs";
 
 export default function Calculator() {
   const [display, setDisplay] = useState("0");
   const [expression, setExpression] = useState("");
+  
 
   const handleNumberClick = (num) => {
     if (display === "0" && num === "0") return;
@@ -31,18 +33,19 @@ export default function Calculator() {
     setExpression("");
   };
 
-const handleEquals = () => {
+  const handleEquals = () => {
     try {
-        const result = Function(`return ${expression}`)();
-        const formattedResult = parseFloat(result).toFixed(4).replace(/\.?0+$/, '');
-        setDisplay(formattedResult); 
-        setExpression(formattedResult); 
+      const result = evaluate(expression);
+      const formattedResult = parseFloat(result)
+        .toFixed(4)
+        .replace(/\.?0+$/, "");
+      setDisplay(formattedResult);
+      setExpression(formattedResult);
     } catch (error) {
-        setDisplay("Error");
-        setExpression(""); // Optionnel : réinitialise l'expression en cas d'erreur
+      setDisplay("Error");
+      setExpression("");
     }
-};
-
+  };
 
   return (
     <div className="calculator">
