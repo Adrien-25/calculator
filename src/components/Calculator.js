@@ -4,12 +4,31 @@ import { evaluate } from "mathjs";
 export default function Calculator() {
   const [display, setDisplay] = useState("0");
   const [expression, setExpression] = useState("");
-  
+  const [isResult, setIsResult] = useState(false);
 
   const handleNumberClick = (num) => {
     if (display === "0" && num === "0") return;
-    setDisplay((prev) => (/^[+\-*/]$/.test(prev) ? num : prev + num));
-    setExpression((prev) => (prev === "0" ? num : prev + num));
+    if (isResult) {
+      setDisplay(num);
+      setExpression(num);
+      setIsResult(false);
+      return;
+    }
+    setDisplay((prev) => {
+      if (/^[+\-*/]$/.test(prev)) {
+        return num;
+      } else {
+        return prev + num;
+      }
+    });
+
+    setExpression((prev) => {
+      if (prev === "0") {
+        return num;
+      } else {
+        return prev + num;
+      }
+    });
   };
 
   const handleOperatorClick = (operator) => {
@@ -31,6 +50,7 @@ export default function Calculator() {
   const handleClear = () => {
     setDisplay("0");
     setExpression("");
+    setIsResult(false);
   };
 
   const handleEquals = () => {
@@ -41,6 +61,7 @@ export default function Calculator() {
         .replace(/\.?0+$/, "");
       setDisplay(formattedResult);
       setExpression(formattedResult);
+      setIsResult(true);
     } catch (error) {
       setDisplay("Error");
       setExpression("");
