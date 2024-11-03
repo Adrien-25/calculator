@@ -6,17 +6,7 @@
   background-color: midnightblue;
   flex-direction: column;
 }
-#github-link{
-  display: inline-block;
-  margin-top: 20px; /* Ajuste l'espacement selon tes préférences */
-  padding: 10px 20px;
-  color: white;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 0.8rem;
-  transition: background-color 0.3s, color 0.3s;
-}
+
 .calculator {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -72,4 +62,31 @@ button#zero {
 
 button:hover {
   opacity: 0.8;
+}
+
+
+#github-link {
+  border-radius: 10px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-top: 40px;
+  padding: 10px 20px;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+  border: 1px solid white;
+  gap: 10px;
+}
+#github-link svg{
+  transition: all 0.3s;
+}
+#github-link:hover {
+  background-color: white;
+  color: #1e1e1e;
+}
+#github-link:hover svg{
+  fill: #1e1e1e;
 }
