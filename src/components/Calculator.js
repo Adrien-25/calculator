@@ -6,8 +6,8 @@ export default function Calculator() {
 
   const handleNumberClick = (num) => {
     if (display === "0" && num === "0") return;
-    setDisplay((prev) => (prev === "0" ? num : prev + num));
-    setExpression((prev) => prev + num);
+    setDisplay((prev) => (/^[+\-*/]$/.test(prev) ? num : prev + num));
+    setExpression((prev) => (prev === "0" ? num : prev + num));
   };
 
   const handleOperatorClick = (operator) => {
@@ -31,15 +31,18 @@ export default function Calculator() {
     setExpression("");
   };
 
-  const handleEquals = () => {
+const handleEquals = () => {
     try {
-      const result = Function(`return ${expression}`)().toFixed(4);
-      setDisplay(result);
-      setExpression(result);
+        const result = Function(`return ${expression}`)();
+        const formattedResult = parseFloat(result).toFixed(4).replace(/\.?0+$/, '');
+        setDisplay(formattedResult); 
+        setExpression(formattedResult); 
     } catch (error) {
-      setDisplay("Error");
+        setDisplay("Error");
+        setExpression(""); // Optionnel : réinitialise l'expression en cas d'erreur
     }
-  };
+};
+
 
   return (
     <div className="calculator">
