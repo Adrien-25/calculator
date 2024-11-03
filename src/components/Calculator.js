@@ -15,7 +15,9 @@ export default function Calculator() {
       return;
     }
     setDisplay((prev) => {
-      if (/^[+\-*/]$/.test(prev)) {
+      if (prev === "0") {
+        return num;
+      } else if (/^[+\-*/]$/.test(prev)) {
         return num;
       } else {
         return prev + num;
