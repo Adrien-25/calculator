@@ -39,6 +39,7 @@ export default function Calculator() {
     } else {
       setExpression((prev) => prev + operator);
     }
+    setIsResult(false);
     setDisplay(operator);
   };
 
